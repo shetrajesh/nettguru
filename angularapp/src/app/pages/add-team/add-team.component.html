@@ -1,0 +1,25 @@
+<div class="portal-layout">
+  <app-portal-sidebar></app-portal-sidebar>
+  <main class="page">
+    <header class="page-header"><div><p class="eyebrow">Team</p><h1>Invite a team member</h1></div></header>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="panel">
+      <h2>Team member details</h2>
+      <div class="form-grid">
+        <label>First name <span>*</span><input formControlName="firstName" placeholder="First name"><small *ngIf="f.firstName.touched && f.firstName.invalid">First name is required.</small></label>
+        <label>Last name <span>*</span><input formControlName="lastName" placeholder="Last name"><small *ngIf="f.lastName.touched && f.lastName.invalid">Last name is required.</small></label>
+        <label>Email address <span>*</span><input type="email" formControlName="email" placeholder="name@company.com"><small *ngIf="f.email.touched && f.email.invalid">Enter a valid email address.</small></label>
+        <label>Role <span>*</span><select formControlName="role"><option value="">Select role</option><option *ngFor="let role of roles" [value]="role">{{role}}</option></select><small *ngIf="f.role.touched && f.role.invalid">Choose a role.</small></label>
+      </div>
+      <div class="actions"><button class="primary" type="submit" [disabled]="form.invalid || saving">{{saving ? 'Sending…' : 'Send an invite'}}</button></div>
+      <p class="success" *ngIf="successMessage">{{successMessage}}</p><p class="error" *ngIf="errorMessage">{{errorMessage}}</p>
+    </form>
+
+    <section class="panel invite-panel">
+      <div class="section-heading"><div><h2>Team members invited</h2><p>Invitations created during this session</p></div><span class="count">{{invitedMembers.length}}</span></div>
+      <div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Invitation status</th><th>Invited</th></tr></thead><tbody>
+        <tr *ngFor="let m of invitedMembers"><td>{{m.firstName}} {{m.lastName}}</td><td>{{m.email}}</td><td>{{m.role}}</td><td><span class="status">{{m.invitationStatus || 'Pending'}}</span></td><td>{{m.createdAt | date:'mediumDate'}}</td></tr>
+        <tr *ngIf="!invitedMembers.length"><td colspan="5" class="empty">No team invitations to display yet.</td></tr>
+      </tbody></table></div>
+    </section>
+  </main>
+</div>

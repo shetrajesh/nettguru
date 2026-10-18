@@ -1,0 +1,112 @@
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #f4f6f8;
+  font-family: 'IBM Plex Sans', Arial, sans-serif;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 430px;
+  padding: 36px;
+  background: white;
+  border: 1px solid #d5dbe3;
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(14, 23, 38, 0.08);
+}
+
+.login-card h1 {
+  font-size: 30px;
+  letter-spacing: -0.8px;
+  color: #0e1726;
+}
+
+.login-card p {
+  color: #4b5870;
+  line-height: 1.5;
+}
+
+.login-card label {
+  display: block;
+  margin: 18px 0 8px;
+  font-weight: 600;
+}
+
+.login-card input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #d5dbe3;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.login-card input.invalid {
+  border-color: #c62828;
+  background-color: #fff8f8;
+}
+
+.login-card input.invalid:focus {
+  outline: 2px solid rgba(198, 40, 40, 0.2);
+  outline-offset: 1px;
+}
+
+.login-card button {
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px;
+  border: none;
+  border-radius: 9px;
+  background: #5fd4b4;
+  color: #0e1726;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login-card button:hover {
+  filter: brightness(0.95);
+}
+
+.login-card .text-link {
+  display: block;
+  width: auto;
+  margin: 16px 0 0 auto;
+  padding: 0;
+  background: none;
+  color: #0b7a61;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-card .text-link:hover {
+  text-decoration: underline;
+  filter: none;
+}
+
+.login-card > .back-link {
+  display: inline-block;
+  margin-top: 22px;
+  color: #0b7a61;
+  text-decoration: none;
+}
+
+.login-card button.back-link {
+  width: auto;
+  margin: 22px 0 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+}
+
+.login-card .error {
+  color: #c62828;
+  margin-bottom: 0;
+}

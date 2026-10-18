@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+
+:root {
+  --navy: #0e1726;
+  --navy-2: #25324a;
+  --line: #d5dbe3;
+  --page: #f4f6f8;
+  --mint: #5fd4b4;
+  --teal: #0b7a61;
+  --muted: #4b5870;
+  --soft: #cdd5e0;
+  --mint-bg: #e6f4ef;
+}
+
+html {
+  scroll-behavior: smooth;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  background: var(--page);
+  color: var(--navy);
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--teal);
+}

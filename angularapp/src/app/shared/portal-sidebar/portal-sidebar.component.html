@@ -1,0 +1,21 @@
+<aside class="sidebar">
+  <a class="brand" routerLink="/admin/clients">
+    <span class="brand-mark">N</span>
+    <span>NettGuru Office</span>
+  </a>
+
+  <nav aria-label="Main navigation">
+    <a *ngFor="let item of navigation"
+       [routerLink]="item.route"
+       routerLinkActive="active"
+       [routerLinkActiveOptions]="{ exact: true }">
+      {{ item.label }}
+    </a>
+  </nav>
+
+  <div class="sidebar-user">
+    <strong>Administrator</strong>
+    <span>Portal account</span>
+    <button type="button" class="signout" (click)="signOut()">Sign out</button>
+  </div>
+</aside>

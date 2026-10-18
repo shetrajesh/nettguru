@@ -1,0 +1,25 @@
+<div class="portal-layout">
+  <app-portal-sidebar></app-portal-sidebar>
+  <main class="page">
+    <header class="page-header"><div><p class="eyebrow">Team</p><h1>All team members</h1></div><a class="primary link-button" routerLink="/admin/team/invite">Invite a team member</a></header>
+    <section class="panel">
+      <form class="filters" (ngSubmit)="applyFilters()">
+        <label class="search-field">Search<input name="searchText" [(ngModel)]="searchText" placeholder="Search by name or email"></label>
+        <label>Role<select name="role" [(ngModel)]="role"><option value="">All roles</option><option *ngFor="let x of roles" [value]="x">{{x}}</option></select></label>
+        <label>Status<select name="status" [(ngModel)]="status"><option value="">Any status</option><option *ngFor="let x of statuses" [value]="x">{{x}}</option></select></label>
+        <button class="primary" type="submit">Search</button>
+      </form>
+      <p class="error" *ngIf="errorMessage">{{errorMessage}}</p>
+      <div class="table-wrap"><table><thead><tr>
+        <th><input type="checkbox" aria-label="Select all team members" [checked]="isAllSelected()" (change)="toggleAll($any($event.target).checked)"></th>
+        <th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Last sign-in</th>
+      </tr></thead><tbody>
+        <tr *ngFor="let m of filteredMembers">
+          <td><input type="checkbox" [checked]="isSelected(m.id)" (change)="toggleOne(m.id, $any($event.target).checked)" [attr.aria-label]="'Select '+m.firstName+' '+m.lastName"></td>
+          <td><strong>{{m.firstName}} {{m.lastName}}</strong></td><td>{{m.email}}</td><td>{{m.role}}</td><td><span class="status">{{m.status || m.invitationStatus || '—'}}</span></td><td>{{m.lastSignIn ? (m.lastSignIn | date:'mediumDate') : '—'}}</td>
+        </tr><tr *ngIf="!filteredMembers.length"><td colspan="6" class="empty">No team members match your filters.</td></tr>
+      </tbody></table></div>
+      <div class="table-footer">{{filteredMembers.length}} team member(s)</div>
+    </section>
+  </main>
+</div>

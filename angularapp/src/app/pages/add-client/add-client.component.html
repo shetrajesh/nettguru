@@ -1,0 +1,39 @@
+<div class="portal-layout">
+  <app-portal-sidebar></app-portal-sidebar>
+  <main class="page">
+    <header class="page-header"><div><p class="eyebrow">Clients</p><h1>Invite a client</h1></div></header>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="panel">
+      <h2>Business</h2>
+      <div class="form-grid">
+        <label>Legal name <span>*</span><input formControlName="legalName" placeholder="Legal business name"><small *ngIf="f.legalName.touched && f.legalName.invalid">Legal name is required.</small></label>
+        <label>Display name <span>*</span><input formControlName="displayName" placeholder="Name shown in the portal"><small *ngIf="f.displayName.touched && f.displayName.invalid">Display name is required.</small></label>
+        <label>Business type <span>*</span><select formControlName="businessType"><option value="">Select business type</option><option *ngFor="let type of businessTypes" [value]="type">{{type}}</option></select><small *ngIf="f.businessType.touched && f.businessType.invalid">Choose a business type.</small></label>
+        <label>Time zone <span>*</span><select formControlName="timeZone"><option value="">Select time zone</option><option *ngFor="let zone of timeZones" [value]="zone">{{zone}}</option></select><small *ngIf="f.timeZone.touched && f.timeZone.invalid">Choose a time zone.</small></label>
+      </div>
+
+      <div class="section-divider"></div><h2>Main contact</h2>
+      <div class="form-grid">
+        <label>First name <span>*</span><input formControlName="firstName" placeholder="First name"><small *ngIf="f.firstName.touched && f.firstName.invalid">First name is required.</small></label>
+        <label>Last name <span>*</span><input formControlName="lastName" placeholder="Last name"><small *ngIf="f.lastName.touched && f.lastName.invalid">Last name is required.</small></label>
+        <label class="full">Email address <span>*</span><input type="email" formControlName="email" placeholder="name@company.com"><small *ngIf="f.email.touched && f.email.invalid">Enter a valid email address.</small></label>
+      </div>
+
+      <div class="section-divider"></div><h2>Assignment <em>(optional)</em></h2>
+      <div class="form-grid">
+        <label>Primary associate<select formControlName="primaryAssociate"><option value="">Assign later</option><option *ngFor="let person of associateOptions" [value]="person">{{person}}</option></select></label>
+        <label>Backup associate<select formControlName="backupAssociate"><option value="">No backup</option><option *ngFor="let person of associateOptions" [value]="person">{{person}}</option></select></label>
+      </div>
+
+      <div class="actions"><button class="primary" type="submit" [disabled]="form.invalid || saving">{{saving ? 'Sending…' : 'Send invitation'}}</button></div>
+      <p class="success" *ngIf="successMessage">{{successMessage}}</p><p class="error" *ngIf="errorMessage">{{errorMessage}}</p>
+    </form>
+
+    <section class="panel invite-panel">
+      <div class="section-heading"><div><h2>Clients invited</h2><p>Invitations created during this session</p></div><span class="count">{{invitedClients.length}}</span></div>
+      <div class="table-wrap"><table><thead><tr><th>Client</th><th>Contact</th><th>Email</th><th>Status</th><th>Invited</th></tr></thead>
+      <tbody><tr *ngFor="let client of invitedClients"><td>{{client.displayName}}</td><td>{{client.firstName}} {{client.lastName}}</td><td>{{client.email}}</td><td><span class="status">{{client.invitationStatus || 'Pending'}}</span></td><td>{{client.createdAt | date:'mediumDate'}}</td></tr>
+      <tr *ngIf="!invitedClients.length"><td colspan="5" class="empty">No client invitations to display yet.</td></tr></tbody></table></div>
+    </section>
+  </main>
+</div>

@@ -1,0 +1,6 @@
+@import '../portal-page.css';
+h2 { font-size: 15px; margin: 0 0 18px; color: #34454c; }
+label span { color: #b34c4c; }
+small, .error { color: #b04444; font-size: 12px; }
+.success { color: #28754b; font-size: 13px; }
+.invite-panel { margin-top: 22px; }

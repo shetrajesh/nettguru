@@ -1,0 +1,81 @@
+
+<div class="login-page">
+  <div class="login-card">
+    <ng-container *ngIf="currentView === 'login'; else forgotPassword">
+      <h1>Administrator Login</h1>
+      <p>Sign in to access the NettGuru Office Portal.</p>
+
+      <form (ngSubmit)="login()">
+        <label for="username">User ID</label>
+        <input
+          id="username"
+          type="text"
+          name="username"
+          [(ngModel)]="username"
+          (ngModelChange)="clearLoginError()"
+          [class.invalid]="credentialsInvalid"
+          [attr.aria-invalid]="credentialsInvalid"
+          [attr.aria-describedby]="loginMessage ? 'login-error' : null"
+          autocomplete="username"
+          placeholder="Enter user ID"
+          required
+        />
+
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          (ngModelChange)="clearLoginError()"
+          [class.invalid]="credentialsInvalid"
+          [attr.aria-invalid]="credentialsInvalid"
+          [attr.aria-describedby]="loginMessage ? 'login-error' : null"
+          autocomplete="current-password"
+          placeholder="Enter password"
+          required
+        />
+
+        <p *ngIf="loginMessage" id="login-error" class="error" role="alert">
+          {{ loginMessage }}
+        </p>
+
+        <button type="submit">Login</button>
+      </form>
+
+      <button type="button" class="text-link forgot-link" (click)="showForgotPassword()">
+        Forgot password?
+      </button>
+      <a class="back-link" href="/home">Back to NettGuru website</a>
+    </ng-container>
+
+    <ng-template #forgotPassword>
+      <h1>Forgot password?</h1>
+      <p>Enter your email address to get help recovering your account.</p>
+
+      <form (ngSubmit)="continueForgotPassword()">
+        <label for="recovery-email">Email address</label>
+        <input
+          id="recovery-email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          (ngModelChange)="clearForgotMessage()"
+          autocomplete="email"
+          placeholder="Enter your email address"
+          required
+        />
+
+        <p *ngIf="forgotMessage" class="error" role="alert">
+          {{ forgotMessage }}
+        </p>
+
+        <button type="submit">Continue</button>
+      </form>
+
+      <button type="button" class="text-link back-link" (click)="backToLogin()">
+        Back to login
+      </button>
+    </ng-template>
+  </div>
+</div>

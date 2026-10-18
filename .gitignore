@@ -1,0 +1,95 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Compiled output
+angularapp/dist
+angularapp/tmp
+angularapp/out-tsc
+angularapp/bazel-out
+
+# Node
+angularapp/node_modules
+angularapp/npm-debug.log
+angularapp/yarn-error.log
+
+# IDEs and editors
+angularapp/.idea/
+angularapp/.project
+angularapp/.classpath
+angularapp/.c9/
+angularapp/*.launch
+angularapp/.settings/
+angularapp/*.sublime-workspace
+
+# Visual Studio Code
+angularapp/.vscode/*
+angularapp/!.vscode/settings.json
+angularapp/!.vscode/tasks.json
+angularapp/!.vscode/launch.json
+angularapp/!.vscode/extensions.json
+angularapp/!.vscode/mcp.json
+angularapp/.history/*
+
+# Miscellaneous
+angularapp/.angular/cache
+angularapp/.sass-cache/
+angularapp/connect.lock
+angularapp/coverage
+/libpeerconnection.log
+angularapp/testem.log
+angularapp/typings
+angularapp/__screenshots__/
+
+angularapp/.vscode/extensions.json
+angularapp/.vscode/launch.json
+angularapp/.vscode/mcp.json
+angularapp/.vscode/tasks.json
+angularapp/.prettierrc
+.vscode/settings.json
+angularapp/.editorconfig
+angularapp/public/favicon.ico
+
+# System files
+angularapp/.DS_Store
+angularapp/Thumbs.db
+
+
+
+
+HELP.md
+springapp/target/
+springapp/.mvn/wrapper/maven-wrapper.jar
+springapp/!**/src/main/**/target/
+springapp/!**/src/test/**/target/
+
+### STS ###
+springapp/.apt_generated
+springapp/.classpath
+springapp/.factorypath
+springapp/.project
+springapp/.settings
+springapp/.springBeans
+springapp/.sts4-cache
+
+### IntelliJ IDEA ###
+springapp/.idea
+springapp/*.iws
+springapp/*.iml
+springapp/*.ipr
+
+### NetBeans ###
+springapp/nbproject/private/
+springapp/nbbuild/
+springapp/dist/
+springapp/nbdist/
+springapp/.nb-gradle/
+springapp/build/
+springapp/!**/src/main/**/build/
+springapp/!**/src/test/**/build/
+
+### VS Code ###
+springapp/.vscode/
+
+springapp/.mvn/wrapper/maven-wrapper.properties
+springapp/mvnw
+springapp/mvnw.cmd
+
