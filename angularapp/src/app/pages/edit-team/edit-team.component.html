@@ -1,0 +1,102 @@
+
+<div class="portal-layout">
+  <app-portal-sidebar></app-portal-sidebar>
+
+  <main class="page">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Team</p>
+        <h1>Edit team member</h1>
+        <p>Update the team member's name and role.</p>
+      </div>
+
+      <a class="link-button" routerLink="/admin/team">
+        Back to team
+      </a>
+    </header>
+
+    <section class="panel edit-panel">
+      <p *ngIf="isLoading">Loading team member details...</p>
+
+      <p class="error" *ngIf="errorMessage" role="alert">
+        {{ errorMessage }}
+      </p>
+
+      <p class="success" *ngIf="successMessage" role="status">
+        {{ successMessage }}
+      </p>
+
+      <form
+        *ngIf="!isLoading"
+        class="edit-form"
+        (ngSubmit)="saveChanges()"
+      >
+        <label>
+          First name
+          <input
+            type="text"
+            name="firstName"
+            [(ngModel)]="firstName"
+            required
+            maxlength="100"
+          >
+        </label>
+
+        <label>
+          Last name
+          <input
+            type="text"
+            name="lastName"
+            [(ngModel)]="lastName"
+            required
+            maxlength="100"
+          >
+        </label>
+
+        <label>
+          Email address
+          <input
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            readonly
+          >
+          <small>Email cannot be changed here.</small>
+        </label>
+
+        <label>
+          Role
+          <select
+            name="role"
+            [(ngModel)]="role"
+            required
+          >
+            <option value="">Select a role</option>
+            <option *ngFor="let item of roles" [value]="item">
+              {{ item }}
+            </option>
+          </select>
+        </label>
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="primary"
+            [disabled]="isSaving || isLoading"
+          >
+            {{ isSaving ? 'Saving...' : 'Save changes' }}
+          </button>
+
+          <button
+            type="button"
+            class="secondary"
+            (click)="cancel()"
+            [disabled]="isSaving"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+</div>

@@ -7,6 +7,7 @@ export interface Client {
   firstName: string;
   lastName: string;
   email: string;
+  mobileNumber: string;
   primaryAssociate?: string;
   backupAssociate?: string;
   stage?: string;
@@ -16,7 +17,9 @@ export interface Client {
   lastActivity?: string;
   invitationStatus?: string;
   createdAt?: string;
+  deleted?: boolean;
 }
+
 
 export interface TeamMember {
   id?: number;

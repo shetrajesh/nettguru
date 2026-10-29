@@ -1,0 +1,46 @@
+<div class="dashboard-layout">
+  <app-portal-sidebar></app-portal-sidebar>
+
+  <main class="dashboard-main">
+    <div class="page-heading">
+      <span class="eyebrow">OVERVIEW</span>
+      <h1>Dashboard</h1>
+      <p>Welcome to your NettGuru Office dashboard.</p>
+    </div>
+
+    <section class="stats-grid">
+      <article class="stat-card" *ngFor="let stat of stats">
+        <p class="stat-title">{{ stat.title }}</p>
+        <h2>{{ stat.value }}</h2>
+        <p class="stat-description">{{ stat.description }}</p>
+      </article>
+    </section>
+
+    <section class="dashboard-card">
+      <h2>Quick actions</h2>
+
+      <div class="quick-actions">
+        <a routerLink="/admin/clients/invite" class="action-link">
+          + Invite a client
+        </a>
+
+        <a routerLink="/admin/team/invite" class="action-link">
+          + Invite team member
+        </a>
+
+        <a routerLink="/admin/clients" class="action-link">
+          View all clients
+        </a>
+      </div>
+    </section>
+
+    <section class="dashboard-card activity-card">
+      <h2>Recent activity</h2>
+
+      <div class="activity-item" *ngFor="let activity of activities">
+        <span class="activity-dot"></span>
+        <p>{{ activity }}</p>
+      </div>
+    </section>
+  </main>
+</div>

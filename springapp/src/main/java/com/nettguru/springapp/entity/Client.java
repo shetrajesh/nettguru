@@ -1,7 +1,13 @@
 package com.nettguru.springapp.entity;
 
-import jakarta.persistence.*;
 import java.time.Instant;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "clients")
@@ -31,6 +37,9 @@ public class Client {
     @Column(nullable = false, length = 254)
     private String email;
 
+    @Column(length = 20)
+    private String mobileNumber;
+
     @Column(length = 150)
     private String primaryAssociate;
 
@@ -42,6 +51,9 @@ public class Client {
 
     @Column(length = 80)
     private String status = "Invited";
+
+    @Column(nullable = false)
+    private boolean deleted = false;
 
     private Instant dueDate;
     private Integer openItems = 0;
@@ -188,4 +200,21 @@ public class Client {
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+        public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
 }

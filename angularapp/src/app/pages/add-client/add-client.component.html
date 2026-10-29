@@ -17,6 +17,25 @@
         <label>First name <span>*</span><input formControlName="firstName" placeholder="First name"><small *ngIf="f.firstName.touched && f.firstName.invalid">First name is required.</small></label>
         <label>Last name <span>*</span><input formControlName="lastName" placeholder="Last name"><small *ngIf="f.lastName.touched && f.lastName.invalid">Last name is required.</small></label>
         <label class="full">Email address <span>*</span><input type="email" formControlName="email" placeholder="name@company.com"><small *ngIf="f.email.touched && f.email.invalid">Enter a valid email address.</small></label>
+<div class="form-group">
+    <label for="mobileNumber">Mobile Number<span>*</span></label>
+    <input
+      id="mobileNumber"
+      type="tel"
+      formControlName="mobileNumber"
+      placeholder="Enter mobile number"
+      maxlength="10"
+      inputmode="numeric"
+    />
+
+    <small
+      class="error"
+      *ngIf="form.get('mobileNumber')?.touched &&
+            form.get('mobileNumber')?.invalid"
+    >
+      Enter a valid 10-digit mobile number.
+    </small>
+  </div>
       </div>
 
       <div class="section-divider"></div><h2>Assignment <em>(optional)</em></h2>

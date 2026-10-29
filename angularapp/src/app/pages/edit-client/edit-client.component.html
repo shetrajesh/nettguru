@@ -1,0 +1,164 @@
+<div class="portal-layout">
+  <app-portal-sidebar></app-portal-sidebar>
+
+  <main class="page">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Clients</p>
+        <h1>Edit Client</h1>
+        <p>Update the client's business and contact details.</p>
+      </div>
+
+      <a class="primary link-button" routerLink="/admin/clients">
+        Back to All Clients
+      </a>
+    </header>
+
+    <section class="panel">
+      <p *ngIf="loading">Loading client details...</p>
+
+      <p class="error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </p>
+
+      <p class="success" *ngIf="successMessage">
+        {{ successMessage }}
+      </p>
+
+      <form
+        *ngIf="clientLoaded"
+        [formGroup]="form"
+        (ngSubmit)="submit()"
+        novalidate
+      >
+        <div class="form-grid">
+          <label>
+            Legal Business Name *
+            <input type="text" formControlName="legalName">
+            <small
+              class="error"
+              *ngIf="f.legalName.touched && f.legalName.invalid"
+            >
+              Legal business name is required.
+            </small>
+          </label>
+
+          <label>
+            Display Name *
+            <input type="text" formControlName="displayName">
+            <small
+              class="error"
+              *ngIf="f.displayName.touched && f.displayName.invalid"
+            >
+              Display name is required.
+            </small>
+          </label>
+
+          <label>
+            Business Type *
+            <select formControlName="businessType">
+              <option value="">Select business type</option>
+              <option
+                *ngFor="let type of businessTypes"
+                [value]="type"
+              >
+                {{ type }}
+              </option>
+            </select>
+            <small
+              class="error"
+              *ngIf="f.businessType.touched && f.businessType.invalid"
+            >
+              Please select a business type.
+            </small>
+          </label>
+
+          <label>
+            Time Zone *
+            <select formControlName="timeZone">
+              <option
+                *ngFor="let zone of timeZones"
+                [value]="zone"
+              >
+                {{ zone }}
+              </option>
+            </select>
+          </label>
+
+          <label>
+            First Name *
+            <input type="text" formControlName="firstName">
+            <small
+              class="error"
+              *ngIf="f.firstName.touched && f.firstName.invalid"
+            >
+              First name is required.
+            </small>
+          </label>
+
+          <label>
+            Last Name *
+            <input type="text" formControlName="lastName">
+            <small
+              class="error"
+              *ngIf="f.lastName.touched && f.lastName.invalid"
+            >
+              Last name is required.
+            </small>
+          </label>
+
+          <label>
+            Email *
+            <input type="email" formControlName="email">
+            <small
+              class="error"
+              *ngIf="f.email.touched && f.email.invalid"
+            >
+              Enter a valid email address.
+            </small>
+          </label>
+
+          <label>
+            Mobile Number *
+            <input
+              type="tel"
+              formControlName="mobileNumber"
+              maxlength="10"
+              inputmode="numeric"
+            >
+            <small
+              class="error"
+              *ngIf="f.mobileNumber.touched && f.mobileNumber.invalid"
+            >
+              Enter a valid 10-digit mobile number.
+            </small>
+          </label>
+
+          <label>
+            Primary Associate
+            <input type="text" formControlName="primaryAssociate">
+          </label>
+
+          <label>
+            Backup Associate
+            <input type="text" formControlName="backupAssociate">
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <a class="link-button" routerLink="/admin/clients">
+            Cancel
+          </a>
+
+          <button
+            class="primary"
+            type="submit"
+            [disabled]="saving"
+          >
+            {{ saving ? 'Saving...' : 'Save Changes' }}
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+</div>

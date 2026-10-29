@@ -30,10 +30,11 @@ export class AddClientComponent {
     legalName: ['', Validators.required],
     displayName: ['', Validators.required],
     businessType: ['', Validators.required],
-    timeZone: ['Asia/Kolkata', Validators.required],
+    timeZone: ['', Validators.required],
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
+    mobileNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
     primaryAssociate: [''],
     backupAssociate: ['']
   });
@@ -54,6 +55,7 @@ export class AddClientComponent {
       firstName: value.firstName!.trim(),
       lastName: value.lastName!.trim(),
       email: value.email!.trim(),
+      mobileNumber: value.mobileNumber!.trim(),
       primaryAssociate: value.primaryAssociate || '',
       backupAssociate: value.backupAssociate || '',
       invitationStatus: 'Pending',
@@ -63,7 +65,7 @@ export class AddClientComponent {
     this.api.createClient(client).subscribe({
       next: created => {
         this.invitedClients = [created, ...this.invitedClients];
-        this.successMessage = 'Client invitation created successfully.';
+        this.successMessage = 'Client invitation sent successfully.';
         this.form.reset({ timeZone: 'Asia/Kolkata', primaryAssociate: '', backupAssociate: '' });
         this.saving = false;
       },

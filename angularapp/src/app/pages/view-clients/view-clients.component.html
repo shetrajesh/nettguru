@@ -1,28 +1,176 @@
+
 <div class="portal-layout">
   <app-portal-sidebar></app-portal-sidebar>
+
   <main class="page">
-    <header class="page-header"><div><p class="eyebrow">Clients</p><h1>All clients</h1></div><a class="primary link-button" routerLink="/admin/clients/invite">Invite a client</a></header>
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Clients</p>
+        <h1>All clients</h1>
+      </div>
+
+      <a
+        class="primary link-button"
+        routerLink="/admin/clients/invite"
+      >
+        Invite a client
+      </a>
+    </header>
+
     <section class="panel">
       <form class="filters" (ngSubmit)="applyFilters()">
-        <label class="search-field">Search<input name="searchText" [(ngModel)]="searchText" placeholder="Search clients"></label>
-        <label>Stage<select name="stage" [(ngModel)]="stage"><option value="">All stages</option><option *ngFor="let x of stages" [value]="x">{{x}}</option></select></label>
-        <label>Status<select name="status" [(ngModel)]="status"><option value="">Any status</option><option *ngFor="let x of statuses" [value]="x">{{x}}</option></select></label>
-        <label>Associate<select name="associate" [(ngModel)]="associate"><option value="">All associates</option><option *ngFor="let x of associateOptions" [value]="x">{{x}}</option></select></label>
-        <label class="checkbox-filter"><input type="checkbox" name="notAssignedOnly" [(ngModel)]="notAssignedOnly"> Not assigned only</label>
-        <button class="primary" type="submit">Search</button>
+        <label class="search-field">
+          Search
+          <input
+            name="searchText"
+            [(ngModel)]="searchText"
+            placeholder="Search clients"
+          >
+        </label>
+
+        <label>
+          Stage
+          <select name="stage" [(ngModel)]="stage">
+            <option value="">All stages</option>
+            <option *ngFor="let x of stages" [value]="x">
+              {{ x }}
+            </option>
+          </select>
+        </label>
+
+        <label>
+          Status
+          <select name="status" [(ngModel)]="status">
+            <option value="">Any status</option>
+            <option *ngFor="let x of statuses" [value]="x">
+              {{ x }}
+            </option>
+          </select>
+        </label>
+
+        <label>
+          Associate
+          <select name="associate" [(ngModel)]="associate">
+            <option value="">All associates</option>
+            <option *ngFor="let x of associateOptions" [value]="x">
+              {{ x }}
+            </option>
+          </select>
+        </label>
+
+        <label class="checkbox-filter">
+          <input
+            type="checkbox"
+            name="notAssignedOnly"
+            [(ngModel)]="notAssignedOnly"
+          >
+          Not assigned only
+        </label>
+
+        <button class="primary" type="submit">
+          Search
+        </button>
       </form>
-      <p class="error" *ngIf="errorMessage">{{errorMessage}}</p>
-      <div class="table-wrap"><table><thead><tr>
-        <th><input type="checkbox" aria-label="Select all clients" [checked]="isAllSelected()" (change)="toggleAll($any($event.target).checked)"></th>
-        <th>Client</th><th>Stage</th><th>Due</th><th>Primary</th><th>Backup</th><th>Open</th><th>Last activity</th>
-      </tr></thead><tbody>
-        <tr *ngFor="let c of filteredClients">
-          <td><input type="checkbox" [checked]="isSelected(c.id)" (change)="toggleOne(c.id, $any($event.target).checked)" [attr.aria-label]="'Select '+c.displayName"></td>
-          <td><strong>{{c.displayName || c.legalName}}</strong><small>{{c.firstName}} {{c.lastName}}</small></td>
-          <td>{{c.stage || '—'}}</td><td>{{c.dueDate ? (c.dueDate | date:'mediumDate') : '—'}}</td><td>{{c.primaryAssociate || 'Not assigned'}}</td><td>{{c.backupAssociate || '—'}}</td><td>{{c.openItems ?? 0}}</td><td>{{c.lastActivity ? (c.lastActivity | date:'mediumDate') : '—'}}</td>
-        </tr><tr *ngIf="!filteredClients.length"><td colspan="8" class="empty">No clients match your filters.</td></tr>
-      </tbody></table></div>
-      <div class="table-footer">{{filteredClients.length}} client(s)</div>
+
+      <p class="error" *ngIf="errorMessage" role="alert">
+        {{ errorMessage }}
+      </p>
+
+      <p class="success" *ngIf="successMessage" role="status">
+        {{ successMessage }}
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <input
+                  type="checkbox"
+                  aria-label="Select all clients"
+                  [checked]="isAllSelected()"
+                  (change)="toggleAll($any($event.target).checked)"
+                >
+              </th>
+              <th>Client</th>
+              <th>Stage</th>
+              <th>Status</th>
+              <th>Due</th>
+              <th>Primary</th>
+              <th>Backup</th>
+              <th>Open</th>
+              <th>Last activity</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let c of filteredClients">
+              <td>
+                <input
+                  type="checkbox"
+                  [checked]="isSelected(c.id)"
+                  (change)="toggleOne(c.id, $any($event.target).checked)"
+                  [attr.aria-label]="'Select ' + c.displayName"
+                >
+              </td>
+
+              <td>
+                <strong>{{ c.displayName || c.legalName }}</strong>
+                <small>{{ c.firstName }} {{ c.lastName }}</small>
+              </td>
+
+              <td>{{ c.stage || '—' }}</td>
+
+              <td>
+                <span class="status-text">
+                  {{ c.invitationStatus || c.status || 'Unknown' }}
+                </span>
+              </td>
+
+              <td>
+                {{ c.dueDate ? (c.dueDate | date:'mediumDate') : '—' }}
+              </td>
+
+              <td>{{ c.primaryAssociate || 'Not assigned' }}</td>
+              <td>{{ c.backupAssociate || '—' }}</td>
+              <td>{{ c.openItems ?? 0 }}</td>
+
+              <td>
+                {{ c.lastActivity ? (c.lastActivity | date:'mediumDate') : '—' }}
+              </td>
+
+              <td class="actions-cell">
+                <a
+                  class="link-button edit"
+                  [routerLink]="['/admin/clients/edit', c.id]"
+                >
+                  Edit
+                </a>
+
+                <button
+                  type="button"
+                  class="delete-button"
+                  [disabled]="isDeleting(c.id)"
+                  (click)="deleteClient(c)"
+                >
+                  {{ isDeleting(c.id) ? 'Deleting...' : 'Delete' }}
+                </button>
+              </td>
+            </tr>
+
+            <tr *ngIf="!filteredClients.length">
+              <td colspan="10" class="empty">
+                No clients match your filters.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-footer">
+        {{ filteredClients.length }} client(s)
+      </div>
     </section>
   </main>
 </div>

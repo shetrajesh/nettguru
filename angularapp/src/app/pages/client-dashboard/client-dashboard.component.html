@@ -1,0 +1,41 @@
+
+<div class="dashboard-layout">
+  <main class="dashboard-main">
+    <header class="dashboard-header">
+      <div class="page-heading">
+        <span class="eyebrow">CLIENT PORTAL</span>
+        <h1>Welcome to NettGuru</h1>
+        <p>View your account information below.</p>
+      </div>
+
+      <button
+        type="button"
+        class="sign-out-button"
+        (click)="signOut()">
+        Sign Out
+      </button>
+    </header>
+
+    <section class="dashboard-card">
+      <div class="account-heading">
+        <div class="account-icon">👤</div>
+        <div>
+          <h2>My Account</h2>
+          <p>Your personal and account details</p>
+        </div>
+      </div>
+
+      <div class="account-details">
+        <div class="detail-item">
+          <span class="detail-label">Full Name</span>
+          <span class="detail-value">{{ clientName || '—' }}</span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Email Address</span>
+          <span class="detail-value">{{ clientEmail || '—' }}</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
