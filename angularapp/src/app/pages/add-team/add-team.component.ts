@@ -14,7 +14,7 @@ import { TeamMember } from '../../models/portal.models';
 })
 export class AddTeamComponent {
   private fb = inject(FormBuilder);
-  roles = ['Administrator', 'Associate', 'Reviewer', 'Team member']; // Replace with approved roles.
+  roles = ['Administrator', 'Associate', 'Reviewer']; // Replace with approved roles.
   invitedMembers: TeamMember[] = [];
   successMessage = ''; errorMessage = ''; saving = false;
 

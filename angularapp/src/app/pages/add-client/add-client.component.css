@@ -7,3 +7,28 @@ label span { color: #b34c4c; }
 .success { color: #28754b; font-size: 13px; }
 .error, small { color: #b04444; font-size: 12px; }
 .invite-panel { margin-top: 22px; }
+.mobile-field {
+  width: 100%;
+}
+
+.mobile-field ngx-intl-tel-input {
+  display: block;
+  width: 100%;
+}
+
+.mobile-field ::ng-deep .international-phone {
+  width: 100%;
+}
+
+.mobile-field ::ng-deep input {
+  width: 100%;
+  min-height: 42px;
+  box-sizing: border-box;
+}
+
+.mobile-field .error {
+  display: block;
+  margin-top: 6px;
+  color: #dc3545;
+  font-size: 12px;
+}

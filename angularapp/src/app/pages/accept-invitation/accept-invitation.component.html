@@ -1,0 +1,272 @@
+
+<div class="invitation-container">
+  <div class="invitation-card">
+
+    <div class="brand">
+      <h1>NettGuru</h1>
+      <p>You've been invited to join NettGuru</p>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      <p>Checking your invitation...</p>
+    </div>
+
+    <div *ngIf="!loading && invitation">
+      <div class="success-icon">✓</div>
+
+      <h2>Accept Your Invitation</h2>
+
+      <p class="description">
+        Your invitation is valid. Complete your details below
+        to create your account.
+      </p>
+
+      <div class="invitation-details">
+        <p>
+          <strong>Account type</strong>
+          <span>{{ invitation.inviteType }}</span>
+        </p>
+        <p>
+          <strong>Invited name</strong>
+          <span>{{ fullName.trim() || invitation.name || '—' }}</span>
+        </p>
+        <p>
+          <strong>Email address</strong>
+          <span>{{ invitation.email }}</span>
+        </p>
+        <p>
+          <strong>Invitation status</strong>
+          <span class="status">{{ invitation.status }}</span>
+        </p>
+      </div>
+
+      <form
+        #registrationForm="ngForm"
+        (ngSubmit)="register()"
+        novalidate
+      >
+        <div class="form-group">
+          <label for="fullName">Full name</label>
+
+          <input
+            #fullNameModel="ngModel"
+            id="fullName"
+            name="fullName"
+            type="text"
+            placeholder="Enter your full name"
+            autocomplete="name"
+            [(ngModel)]="fullName"
+            [class.invalid]="fullNameModel.invalid &&
+              (fullNameModel.touched || fullNameModel.dirty)"
+            required
+            minlength="2"
+            [disabled]="registering"
+          />
+
+          <small
+            class="field-error"
+            *ngIf="fullNameModel.invalid &&
+              (fullNameModel.touched || fullNameModel.dirty)"
+          >
+            <span *ngIf="fullNameModel.errors?.['required']">
+              Full name is required.
+            </span>
+            <span *ngIf="fullNameModel.errors?.['minlength']">
+              Name must contain at least 2 characters.
+            </span>
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            [value]="invitation.email"
+            readonly
+          />
+        </div>
+
+        <!-- Email OTP verification -->
+        <div class="otp-section">
+          <h3>Verify your email</h3>
+
+          <p class="field-hint">
+            Send a one-time password to your invitation email address.
+          </p>
+
+          <button
+            type="button"
+            class="otp-button"
+            (click)="sendOtp()"
+            [disabled]="sendingOtp || resendCountdown > 0 ||
+              otpVerified || registering"
+          >
+            <span *ngIf="sendingOtp">Sending OTP...</span>
+            <span *ngIf="!sendingOtp && !otpSent">Send OTP</span>
+            <span *ngIf="!sendingOtp && otpSent &&
+              resendCountdown > 0">
+              Resend OTP in {{ resendCountdown }}s
+            </span>
+            <span *ngIf="!sendingOtp && otpSent &&
+              resendCountdown === 0 && !otpVerified">
+              Resend OTP
+            </span>
+            <span *ngIf="otpVerified">Email Verified</span>
+          </button>
+
+          <div *ngIf="otpSent && !otpVerified" class="otp-input-group">
+            <label for="otp">6-digit OTP</label>
+
+            <input
+              id="otp"
+              name="otp"
+              type="text"
+              inputmode="numeric"
+              autocomplete="one-time-code"
+              maxlength="6"
+              placeholder="Enter 6-digit OTP"
+              [(ngModel)]="otp"
+              (ngModelChange)="onOtpInput($event)"
+              [disabled]="verifyingOtp || registering"
+            />
+
+            <button
+              type="button"
+              class="otp-button verify-button"
+              (click)="verifyOtp()"
+              [disabled]="verifyingOtp || otp.trim().length !== 6 ||
+                registering"
+            >
+              {{ verifyingOtp ? 'Verifying...' : 'Verify OTP' }}
+            </button>
+          </div>
+
+          <p *ngIf="otpMessage" class="otp-success" role="status">
+            {{ otpMessage }}
+          </p>
+
+          <p *ngIf="otpError" class="field-error" role="alert">
+            {{ otpError }}
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Create password</label>
+
+          <input
+            #passwordModel="ngModel"
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Create a password"
+            autocomplete="new-password"
+            [(ngModel)]="password"
+            [class.invalid]="passwordModel.invalid &&
+              (passwordModel.touched || passwordModel.dirty)"
+            required
+            minlength="8"
+            [disabled]="registering || !otpVerified"
+          />
+
+          <small class="field-hint">
+            Use at least 8 characters.
+          </small>
+
+          <small
+            class="field-error"
+            *ngIf="passwordModel.invalid &&
+              (passwordModel.touched || passwordModel.dirty)"
+          >
+            <span *ngIf="passwordModel.errors?.['required']">
+              Password is required.
+            </span>
+            <span *ngIf="passwordModel.errors?.['minlength']">
+              Password must contain at least 8 characters.
+            </span>
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm password</label>
+
+          <input
+            #confirmPasswordModel="ngModel"
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            placeholder="Enter your password again"
+            autocomplete="new-password"
+            [(ngModel)]="confirmPassword"
+            [class.invalid]="confirmPassword.length > 0 &&
+              confirmPassword !== password"
+            required
+            [disabled]="registering || !otpVerified"
+          />
+
+          <small
+            class="field-error"
+            *ngIf="confirmPassword.length > 0 &&
+              confirmPassword !== password"
+          >
+            Passwords do not match.
+          </small>
+
+          <small
+            class="field-success"
+            *ngIf="confirmPassword.length > 0 &&
+              confirmPassword === password && password.length >= 8"
+          >
+            Passwords match.
+          </small>
+        </div>
+
+        <div *ngIf="formError" class="error-message" role="alert">
+          {{ formError }}
+        </div>
+
+        <button
+          type="submit"
+          class="register-button"
+          [disabled]="registering || !otpVerified ||
+            !fullName.trim() || fullName.trim().length < 2 ||
+            password.length < 8 || password !== confirmPassword"
+        >
+          {{ registering ? 'Creating account...' : 'Create Account' }}
+        </button>
+      </form>
+
+      <p class="expiry">
+        Invitation expires:
+        {{ invitation.expiresAt | date:'medium' }}
+      </p>
+    </div>
+
+    <div
+      *ngIf="!loading && !invitation &&
+        message.toLowerCase().includes('registration successful')"
+      class="registration-success"
+      role="status"
+    >
+      <div class="success-icon">✓</div>
+      <h2>Account Created Successfully!</h2>
+      <p>{{ message }}</p>
+      <p>
+        Your account has been created successfully.
+        You can now proceed to the appropriate login page.
+      </p>
+    </div>
+
+    <div
+      *ngIf="!loading && !invitation &&
+        !message.toLowerCase().includes('registration successful')"
+      class="error-message"
+      role="alert"
+    >
+      <h2>Invitation unavailable</h2>
+      <p>{{ message }}</p>
+    </div>
+
+  </div>
+</div>

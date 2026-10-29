@@ -1,81 +1,130 @@
 
 <div class="login-page">
-  <div class="login-card">
-    <ng-container *ngIf="currentView === 'login'; else forgotPassword">
-      <h1>Administrator Login</h1>
-      <p>Sign in to access the NettGuru Office Portal.</p>
+  <header class="login-header">
+    <div class="header-content">
+      <a routerLink="/home" class="brand">
+        <span class="brand-logo">N</span>
+        <span class="brand-name">Nett<span>Guru</span></span>
+      </a>
 
-      <form (ngSubmit)="login()">
-        <label for="username">User ID</label>
-        <input
-          id="username"
-          type="text"
-          name="username"
-          [(ngModel)]="username"
-          (ngModelChange)="clearLoginError()"
-          [class.invalid]="credentialsInvalid"
-          [attr.aria-invalid]="credentialsInvalid"
-          [attr.aria-describedby]="loginMessage ? 'login-error' : null"
-          autocomplete="username"
-          placeholder="Enter user ID"
-          required
-        />
+      <a routerLink="/home" class="back-home">← Back to home</a>
+    </div>
+  </header>
 
-        <label for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          name="password"
-          [(ngModel)]="password"
-          (ngModelChange)="clearLoginError()"
-          [class.invalid]="credentialsInvalid"
-          [attr.aria-invalid]="credentialsInvalid"
-          [attr.aria-describedby]="loginMessage ? 'login-error' : null"
-          autocomplete="current-password"
-          placeholder="Enter password"
-          required
-        />
+  <main class="login-main">
+    <section class="login-card">
 
-        <p *ngIf="loginMessage" id="login-error" class="error" role="alert">
-          {{ loginMessage }}
+      <ng-container *ngIf="currentView === 'login'; else forgotPassword">
+        <h1>Login</h1>
+        <p class="login-subtitle">
+          Sign in to your NettGuru account.
         </p>
 
-        <button type="submit">Login</button>
-      </form>
+        <form (ngSubmit)="login()">
+          <div class="form-group">
+            <label for="username">User ID</label>
+            <input
+              id="username"
+              type="email"
+              name="username"
+              [(ngModel)]="username"
+              (ngModelChange)="clearLoginError()"
+              [class.invalid]="credentialsInvalid"
+              autocomplete="username"
+              required
+            />
+          </div>
 
-      <button type="button" class="text-link forgot-link" (click)="showForgotPassword()">
-        Forgot password?
-      </button>
-      <a class="back-link" href="/home">Back to NettGuru website</a>
-    </ng-container>
+          <div class="form-group">
+            <label for="password">Password</label>
 
-    <ng-template #forgotPassword>
-      <h1>Forgot password?</h1>
-      <p>Enter your email address to get help recovering your account.</p>
+            <div class="password-wrapper">
+              <input
+                id="password"
+                [type]="showPassword ? 'text' : 'password'"
+                name="password"
+                [(ngModel)]="password"
+                (ngModelChange)="clearLoginError()"
+                [class.invalid]="credentialsInvalid"
+                autocomplete="current-password"
+                required
+              />
 
-      <form (ngSubmit)="continueForgotPassword()">
-        <label for="recovery-email">Email address</label>
-        <input
-          id="recovery-email"
-          type="email"
-          name="email"
-          [(ngModel)]="email"
-          (ngModelChange)="clearForgotMessage()"
-          autocomplete="email"
-          placeholder="Enter your email address"
-          required
-        />
+              <button
+                type="button"
+                class="show-password"
+                (click)="showPassword = !showPassword">
+                {{ showPassword ? 'Hide' : 'Show' }}
+              </button>
+            </div>
+          </div>
 
-        <p *ngIf="forgotMessage" class="error" role="alert">
-          {{ forgotMessage }}
+          <p *ngIf="loginMessage" class="error" role="alert">
+            {{ loginMessage }}
+          </p>
+
+          <button
+            type="submit"
+            class="sign-in-button"
+            [disabled]="isLoading">
+            {{ isLoading ? 'Signing in...' : 'Sign in' }}
+          </button>
+        </form>
+
+        <button
+          type="button"
+          class="text-link forgot-link"
+          (click)="showForgotPassword()">
+          Forgot password?
+        </button>
+      </ng-container>
+
+      <ng-template #forgotPassword>
+        <h1>Forgot password?</h1>
+        <p class="login-subtitle">
+          Enter your email address to get help recovering your account.
         </p>
 
-        <button type="submit">Continue</button>
-      </form>
+        <form (ngSubmit)="continueForgotPassword()">
+          <div class="form-group">
+            <label for="recovery-email">Email address</label>
+            <input
+              id="recovery-email"
+              type="email"
+              name="email"
+              [(ngModel)]="email"
+              (ngModelChange)="clearForgotMessage()"
+              autocomplete="email"
+              required
+            />
+          </div>
 
-      <button type="button" class="text-link back-link" (click)="backToLogin()">
-        Back to login
-      </button>
-    </ng-template>
-  </div>
+          <p *ngIf="forgotMessage" class="error" role="alert">
+            {{ forgotMessage }}
+          </p>
+
+          <button type="submit" class="sign-in-button">
+            Continue
+          </button>
+        </form>
+
+        <button
+          type="button"
+          class="text-link forgot-link"
+          (click)="backToLogin()">
+          Back to login
+        </button>
+      </ng-template>
+
+      <div class="support-info">
+        <p>
+          Need help? Email
+          <a href="mailto:info@nettguru.com">info@nettguru.com</a>
+          or call
+          <a href="tel:+16692872102">+1 669-287-2102</a>.
+        </p>
+      </div>
+
+    </section>
+  </main>
 </div>

@@ -93,3 +93,4 @@ springapp/.mvn/wrapper/maven-wrapper.properties
 springapp/mvnw
 springapp/mvnw.cmd
 
+/node_modules/

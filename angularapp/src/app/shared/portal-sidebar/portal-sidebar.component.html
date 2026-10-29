@@ -4,14 +4,19 @@
     <span>NettGuru Office</span>
   </a>
 
+  
   <nav aria-label="Main navigation">
-    <a *ngFor="let item of navigation"
-       [routerLink]="item.route"
-       routerLinkActive="active"
-       [routerLinkActiveOptions]="{ exact: true }">
+    <a
+      *ngFor="let item of navigation"
+      [routerLink]="item.route"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      (click)="logNavigation(item.route)"
+    >
       {{ item.label }}
     </a>
   </nav>
+
 
   <div class="sidebar-user">
     <strong>Administrator</strong>

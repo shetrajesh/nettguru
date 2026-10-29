@@ -16,11 +16,20 @@ public class Invitation {
     @Column(nullable = false, length = 254)
     private String email;
 
+    @Column(nullable = false)
+    private String name;
+
     @Column(nullable = false, length = 80)
     private String status = "Pending";
 
     @Column(nullable = false)
     private Instant createdAt = Instant.now();
+
+    @Column(unique = true, length = 128)
+    private String token;
+
+    @Column(length = 254)
+    private String invitedBy;
 
     private Instant expiresAt;
     private Instant acceptedAt;
@@ -83,4 +92,30 @@ public class Invitation {
     public void setAcceptedAt(Instant acceptedAt) {
         this.acceptedAt = acceptedAt;
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getInvitedBy() {
+        return invitedBy;
+    }
+
+    public void setInvitedBy(String invitedBy) {
+        this.invitedBy = invitedBy;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
 }

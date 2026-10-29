@@ -6,7 +6,13 @@ import { AddClientComponent } from './pages/add-client/add-client.component';
 import { ViewTeamComponent } from './pages/view-team/view-team.component';
 import { AddTeamComponent } from './pages/add-team/add-team.component';
 import { AdminLoginComponent } from './pages/admin-login/admin-login';
-
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { EditClientComponent } from './pages/edit-client/edit-client.component';
+import { EditTeamComponent } from './pages/edit-team/edit-team.component';
+import { authGuard } from './guards/auth-guard';
+import { AcceptInvitationComponent } from './pages/accept-invitation/accept-invitation.component';
+import { TeamDashboardComponent } from './pages/team-dashboard/team-dashboard.component';
+import { ClientDashboardComponent} from './pages/client-dashboard/client-dashboard.component';
 export const routes: Routes = [
   // Public website
   {
@@ -24,31 +30,74 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
 
-  // Admin login
+  // Public admin login
   {
     path: 'admin-login',
     component: AdminLoginComponent
   },
 
-  // Admin - Clients
-  {
-    path: 'admin/clients',
-    component: ViewClientsComponent
-  },
+  // Protected admin pages
   {
     path: 'admin/clients/invite',
-    component: AddClientComponent
+    component: AddClientComponent,
+    canActivate: [authGuard]
   },
-
-  // Admin - Team
   {
-    path: 'admin/team',
-    component: ViewTeamComponent
+    path: 'admin/clients',
+    component: ViewClientsComponent,
+    pathMatch: 'full',
+    canActivate: [authGuard]
   },
   {
     path: 'admin/team/invite',
-    component: AddTeamComponent
+    component: AddTeamComponent,
+    canActivate: [authGuard]
   },
+  {
+    path: 'admin/team',
+    component: ViewTeamComponent,
+    pathMatch: 'full',
+    canActivate: [authGuard]
+  },
+  {
+    path: 'admin/dashboard',
+    component: DashboardComponent,
+    pathMatch: 'full',
+    canActivate: [authGuard],
+    data : { role:'ADMIN'}
+  },
+  
+  {
+    path: 'admin/clients/edit/:id',
+    component: EditClientComponent,
+    canActivate: [authGuard]
+  },
+
+  {
+  path: 'accept-invitation',
+  component: AcceptInvitationComponent
+  },
+
+  {
+  path: 'admin/team/edit/:id',
+  component: EditTeamComponent,
+  canActivate: [authGuard]
+},
+
+{
+  path: 'team/dashboard',
+  component: TeamDashboardComponent,
+  canActivate: [authGuard],
+  pathMatch: 'full',
+  data : { role:'TEAM'}
+},
+{
+  path: 'client/dashboard',
+  component: ClientDashboardComponent,
+  canActivate: [authGuard],
+  pathMatch: 'full',
+  data : { role:'CLIENT'}
+},
 
   // Unknown URLs
   {
